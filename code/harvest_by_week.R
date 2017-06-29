@@ -38,8 +38,30 @@ sum_by_day %>%
   left_join(total_season) -> dunge2
 
 dunge2 %>% 
-  mutate(per_total_N = numbers/ totalN, per_total_P = pounds/totalP) ->dunge3
+  mutate(per_total_N = numbers/ totalN, per_total_P = pounds/totalP, 
+         sell_date = as.Date(selld, format = "%m/%d/%Y"), 
+         day = format(sell_date, "%j")) ->dunge3
 
 
-dunge3
 
+
+summmer_season = c()
+dunge3 %>% filter(SEASON == 'Apr2012 - Mar13') ->d_12 # 167 to 222
+d_12 %>% filter(day >= 167 & day <=222) -> summer_12
+write.csv(summer_12, './results/summer_12.csv')
+
+dunge3 %>% filter(SEASON == 'Apr2013 - Mar14') ->d_13 # 166 to 221
+d_13 %>% filter(day >= 166 & day <=221) -> summer_13
+write.csv(summer_13, './results/summer_13.csv')
+
+dunge3 %>% filter(SEASON == 'Apr2014 - Mar15') ->d_14 # 166 to 221
+d_14 %>% filter(day >= 166 & day <=221) -> summer_14
+write.csv(summer_14, './results/summer_14.csv')
+
+dunge3 %>% filter(SEASON == 'Apr2015 - Mar16') ->d_15 # 166 to 221
+d_15 %>% filter(day >= 166 & day <=221) -> summer_15
+write.csv(summer_15, './results/summer_15.csv')
+
+dunge3 %>% filter(SEASON == 'Apr2016 - Mar17') ->d_16 # 167 to 222
+d_16 %>% filter(day >= 167 & day <=222) -> summer_16
+write.csv(summer_16, './results/summer_16.csv')
