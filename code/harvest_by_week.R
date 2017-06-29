@@ -13,12 +13,19 @@ glimpse(dunge)
 
 
 ### reduce data ----
-dunge %>% select(year = YEAR, TICKET = TICKET_NO, cdate = CATCH_DATE, STAT_WEEK, selld = SELL_DATE, 
+dunge %>% select(year = YEAR, SEASON, TICKET = TICKET_NO, cdate = CATCH_DATE, STAT_WEEK, selld = SELL_DATE, 
                  numbers = NUMBERS, pounds = POUNDS) -> dunge1
 
 
 ### stat week -----
+dunge1 %>% 
+  group_by(SEASON, STAT_WEEK) %>% 
+  summarise (sum(numbers), sum(pounds)) ->sum_stat_week
 
+
+dunge1 %>% 
+  group_by(SEASON) %>% 
+  summarise(sum(numbers), sum(pounds)) -> total_season
 
 
 #### by day ----
