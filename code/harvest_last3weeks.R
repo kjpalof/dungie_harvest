@@ -36,8 +36,14 @@ dunge %>% select(year = YEAR, SEASON, TICKET = TICKET_NO, cdate = CATCH_DATE, ST
 
 # need to convert dates as factors to dates so I can add a day of the season or day of the year.
 dunge1 %>% 
-  mutate(c_date = as.Date(cdate, format = "%m/%d/%Y")) -> test
+  mutate(c_date = as.Date(cdate, format = "%m/%d/%Y"), 
+         cdate_mo = month(c_date), cdate_day = day(c_date)) -> test
          
-test %>% 
-  mutate(cdate_mo = month(c_date), cdate_day = day(c_date)) -> test 
+# need to create a key for season weeks
+week <- c(rep(1, 7), rep(2,7), rep(3,7), rep(4,7), rep(5,7), rep(6,7), rep(7,7), rep(8,7), rep(9,6)) # 9 weeks in summer season
+month <- c(rep(6, 16), rep(7, 31), rep(8,15))
+day <- c(seq(from = 15, to =30), seq(1:31), seq(1:15))
 
+season_week <- data.frame(week, month, day)
+season_week %>% 
+  
