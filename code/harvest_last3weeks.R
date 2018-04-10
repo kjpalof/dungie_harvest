@@ -16,6 +16,7 @@ library(tidyverse)
 library(reshape2)
 library(xlsx)
 library(extrafont)
+library(lubridate)
 options(scipen=9999) # remove scientific notation
 
 loadfonts(device="win")
@@ -32,3 +33,11 @@ glimpse(dunge)
 ### reduce data ----
 dunge %>% select(year = YEAR, SEASON, TICKET = TICKET_NO, cdate = CATCH_DATE, STAT_WEEK, selld = SELL_DATE, 
                  numbers = NUMBERS, pounds = POUNDS) -> dunge1
+
+# need to convert dates as factors to dates so I can add a day of the season or day of the year.
+dunge1 %>% 
+  mutate(c_date = as.Date(cdate, format = "%m/%d/%Y")) -> test
+         
+test %>% 
+  mutate(cdate_mo = month(c_date), cdate_day = day(c_date)) -> test 
+
