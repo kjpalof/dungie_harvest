@@ -45,10 +45,10 @@ dunge1 %>%
 week <- c(rep(1, 7), rep(2,7), rep(3,7), rep(4,7), rep(5,7), rep(6,7), rep(7,7), rep(8,7), rep(9,6)) # 9 weeks in summer season
 month <- c(rep(6, 16), rep(7, 31), rep(8,15))
 day <- c(seq(from = 15, to =30), seq(1:31), seq(1:15))
-#summer
+#summer season is weeks 1 -9
 season_week <- data.frame(week, month, day)
 
-# fall
+# fall season is weeks 10-19
 week <- c(rep(10, 7), rep(12,7), rep(13,7), rep(14,7), rep(15,7), rep(16,7), rep(17,7), rep(18,7), rep(19,5)) # 9 weeks in summer season
 month <- c(rep(10, 31), rep(11, 30))
 day <- c(seq(from = 1, to =31), seq(1:30))
@@ -70,5 +70,21 @@ dunge_data %>%
 
 ## annual weekly catch ----
 dunge_data %>% 
-  group_by(year, week) %>% 
+  group_by(SEASON, week) %>% 
   summarise(numbers = sum(numbers), pounds = sum(pounds)) ->dunge_week
+
+## annual summer season catch  ----
+dunge_data %>% 
+  group_by(SEASON) %>% 
+  filter(week < 10) %>% 
+  summarise(su_numbers = sum(numbers), su_pounds = sum(pounds)) -> summer_total
+## annual fall season catch ----
+dunge_data %>% 
+  group_by(SEASON) %>% 
+  filter(week > 9) %>% 
+  summarise(fa_numbers = sum(numbers), fa_pounds = sum(pounds)) -> fall_total
+## total annual catch -----
+##      maybe larger due to some areas being open later...
+dunge_data %>% 
+  group_by(SEASON) %>% 
+  summarise(season_numbers = sum(numbers), season_pounds = sum(pounds)) -> season_total
