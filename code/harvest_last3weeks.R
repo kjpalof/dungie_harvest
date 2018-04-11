@@ -80,17 +80,17 @@ dunge_data %>%
 dunge_data %>% 
   group_by(SEASON) %>% 
   filter(week < 10) %>% 
-  summarise(su_numbers = sum(numbers), su_pounds = sum(pounds)) -> summer_total
+  summarise(su_numbers = sum(numbers), su_pounds = sum(pounds, na.rm = TRUE)) -> summer_total
 ## annual fall season catch ----
 dunge_data %>% 
   group_by(SEASON) %>% 
   filter(week > 9) %>% 
-  summarise(fa_numbers = sum(numbers), fa_pounds = sum(pounds)) -> fall_total
+  summarise(fa_numbers = sum(numbers), fa_pounds = sum(pounds, na.rm = TRUE)) -> fall_total
 ## total annual catch -----
 ##      maybe larger due to some areas being open later...
 dunge_data %>% 
   group_by(SEASON) %>% 
-  summarise(season_numbers = sum(numbers), season_pounds = sum(pounds)) -> season_total
+  summarise(season_numbers = sum(numbers), season_pounds = sum(pounds, na.rm = TRUE)) -> season_total
 
 ## combine all ----
 dunge_week %>% 
