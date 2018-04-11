@@ -66,3 +66,9 @@ season_week_all %>%
 # bind season week to test to get a variable for week of the season in each year
 dunge_data %>% 
   left_join(season_week_all) ->dunge_data
+
+
+## annual weekly catch ----
+dunge_data %>% 
+  group_by(year, week) %>% 
+  summarise(numbers = sum(numbers), pounds = sum(pounds)) ->dunge_week
