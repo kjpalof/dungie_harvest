@@ -115,3 +115,17 @@ pct.summary %>%
   ggplot(aes(week, pct.wtn.season)) + 
   geom_point() +
   xlab("week of fall season")
+
+
+pct.summary %>% 
+  filter(week < 10) %>% 
+  ggplot(aes(week, pounds)) + 
+  geom_point() +
+  xlab("week of summer season")
+
+
+## percentage in last 3 weeks of summer season ----
+pct.summary %>% 
+  filter(week > 6 & week < 10) %>% 
+  group_by(SEASON) %>% 
+  summarise(pct = sum(pct.wtn.season))
