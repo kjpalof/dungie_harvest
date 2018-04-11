@@ -88,3 +88,24 @@ dunge_data %>%
 dunge_data %>% 
   group_by(SEASON) %>% 
   summarise(season_numbers = sum(numbers), season_pounds = sum(pounds)) -> season_total
+
+## combine all ----
+dunge_week %>% 
+  left_join(summer_total) %>% 
+  left_join(fall_total) %>%
+  left_join(season_total) -> dunge_harvest1
+
+## percentage of summer and total by week ----
+dunge_harvest1 %>% 
+  dplyr::select(SEASON, week, pounds, su_pounds, fa_pounds, season_pounds) %>% 
+  mutate(pct.wtn.season = as.numeric(  # percentage of harvest by week within either the summer or fall season
+           ifelse(week < 10, pounds/su_pounds, ifelse(week > 9, pounds/fa_pounds, "NA"))), 
+         pct.total.season = pounds/season_pounds) -> pct.summary
+
+pct.summary %>% 
+  filter(week < 10) %>% 
+  ggplot(aes(week, pct.wtn.season)) + 
+    geom_point() +
+    xlab("week of summer season")
+
+
