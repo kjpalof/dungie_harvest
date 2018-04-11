@@ -102,10 +102,16 @@ dunge_harvest1 %>%
            ifelse(week < 10, pounds/su_pounds, ifelse(week > 9, pounds/fa_pounds, "NA"))), 
          pct.total.season = pounds/season_pounds) -> pct.summary
 
+
+## graphs -----
 pct.summary %>% 
   filter(week < 10) %>% 
   ggplot(aes(week, pct.wtn.season)) + 
     geom_point() +
     xlab("week of summer season")
 
-
+pct.summary %>% 
+  filter(week > 9) %>% 
+  ggplot(aes(week, pct.wtn.season)) + 
+  geom_point() +
+  xlab("week of fall season")
