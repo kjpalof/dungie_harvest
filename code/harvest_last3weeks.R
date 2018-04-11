@@ -46,4 +46,8 @@ day <- c(seq(from = 15, to =30), seq(1:31), seq(1:15))
 
 season_week <- data.frame(week, month, day)
 season_week %>% 
+  mutate(cdate_mo = month, cdate_day = day) -> season_week
   
+# bind season week to test to get a variable for week of the season in each year
+test %>% 
+  left_join(season_week) ->test2
