@@ -27,15 +27,18 @@ theme_set(theme_bw(base_size=12,base_family='Times New Roman')+
 
 
 #### Load data ----
-dunge <- read.csv("./data/Dungeness_12_16.csv") # tanner crab survey data
-glimpse(dunge)
+dunge1 <- read.csv("./data/dunge_harvest_00_09.csv") # 2000 to 2009 fish ticket data
+dunge2 <- read.csv("./data/dunge_harvest_10_17.csv") # 2010 to 2017 fish ticket data
+
+dunge1 %>% 
+  bind_rows(dunge2) -> dunge
 
 ### reduce data ----
 dunge %>% select(year = YEAR, SEASON, TICKET = TICKET_NO, cdate = CATCH_DATE, STAT_WEEK, selld = SELL_DATE, 
-                 numbers = NUMBERS, pounds = POUNDS) -> dunge1
+                 numbers = NUMBERS, pounds = POUNDS) -> dunge_data
 
 # need to convert dates as factors to dates so I can add a day of the season or day of the year.
-dunge1 %>% 
+dunge_data %>% 
   mutate(c_date = as.Date(cdate, format = "%m/%d/%Y"), 
          cdate_mo = month(c_date), cdate_day = day(c_date)) -> dunge_data
 
