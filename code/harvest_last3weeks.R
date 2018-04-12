@@ -128,7 +128,11 @@ pct.summary %>%
 
 
 ## percentage in last 3 weeks of summer season ----
-pct.summary %>% 
+(pct.summary %>% 
   filter(week > 6 & week < 10) %>% 
   group_by(SEASON) %>% 
-  summarise(pct = sum(pct.wtn.season))
+  summarise(pct_last3su = sum(pct.wtn.season)) #%>% 
+  #summarise(avg = mean(pct))
+  -> su_3weeks) # average in the last 3 weeks of summer since 2000
+
+write.csv(su_3weeks, './results/last_3weeks_summer.csv')
