@@ -52,7 +52,7 @@ day <- c(seq(from = 15, to =30), seq(1:31), seq(1:15))
 season_week <- data.frame(week, month, day)
 
 # fall season is weeks 10-19
-week <- c(rep(10, 7), rep(12,7), rep(13,7), rep(14,7), rep(15,7), rep(16,7), rep(17,7), rep(18,7), rep(19,5)) # 9 weeks in summer season
+week <- c(rep(10, 7), rep(11,7), rep(12,7), rep(13,7), rep(14,7), rep(15,7), rep(16,7), rep(17,7), rep(18,5)) # 9 weeks in summer season
 month <- c(rep(10, 31), rep(11, 30))
 day <- c(seq(from = 1, to =31), seq(1:30))
 
@@ -127,7 +127,7 @@ pct.summary %>%
   xlab("week of summer season")
 
 
-## percentage in last 3 weeks of summer season ----
+## percentage in last 3 weeks of summer season in just SUMMER harvest ----
 (pct.summary %>% 
   filter(week > 6 & week < 10) %>% 
   group_by(SEASON) %>% 
@@ -136,3 +136,22 @@ pct.summary %>%
   -> su_3weeks) # average in the last 3 weeks of summer since 2000
 
 write.csv(su_3weeks, './results/last_3weeks_summer.csv')
+
+## percentage of last 3 weeks of summer to the season harvest NOT just summer-----
+(pct.summary %>% 
+   filter(week > 6 & week < 10) %>% 
+   group_by(SEASON) %>% 
+   summarise(pct_last3su_total = sum(pct.total.season)) #%>% 
+ #summarise(avg = mean(pct))
+ -> su_3weeks_to_totalseason) # average in the last 3 weeks of summer since 2000 for the total season harvest
+
+write.csv(su_3weeks_to_totalseason, './results/last_3weeks_summer_pct_of_totalseason.csv')
+
+## percentage in last month of fall season to TOTAL SEASON harvest ------
+(pct.summary %>% 
+   filter(week > 14) %>% 
+   group_by(SEASON) %>% 
+   summarise(pct_lastmo_fa = sum(pct.total.season)) #%>% 
+ #summarise(avg = mean(pct))
+ -> fa_last_month) # 
+write.csv(fa_last_month, './results/last_month_fall_pct_of_totalseason.csv')
